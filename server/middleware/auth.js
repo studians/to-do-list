@@ -10,7 +10,9 @@ let auth = (req, res, next) => {
     // 토큰을 복호화 한 후 유저를 찾는다.
     User.findByToken(token, (err, user) => {
         if(err) throw err; 
-        if(!user) return res.json({ isAuth: false, error: true }) // 유저가 없으면 인증 No !
+        if(!user) return res.json({ isAuth: false, 
+                                    error: true, 
+                                    message: "제공된 이메일에 해당하는 유저가 로그인 중이 아닙니다." }) // 유저가 없으면 인증 No !
 
         // 유저가 있으면 인증 Okay
         req.token = token; //req.token에 넣어주면 index.js의 콜백부분에서 사용할 수 있음
@@ -20,4 +22,4 @@ let auth = (req, res, next) => {
     })    
 }
 
-module.expoert( auth );
+module.exports = { auth }

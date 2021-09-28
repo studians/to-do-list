@@ -40,7 +40,7 @@ app.post('api/users/register', (req, res) => { //콜백펑션: req, res
   }) 
 })
 
-app.post('api/users/login',(req, res) => {
+app.post('/api/users/login',(req, res) => {
   //1. 요청된 e-mail을 DB에 있는지 찾는다.
   User.findOne({email: req.body.email},(err, user) => {
     if(!user){
@@ -68,7 +68,7 @@ app.post('api/users/login',(req, res) => {
   })
 })
 
-app.get('api/users/auth', auth, (req,res) => {
+app.get('/api/users/auth', auth, (req, res) => {
   //여기까지 미들웨어를 통과해 왔다는 얘기는 Authentication이 true인 경우임
   req.status(200).json({
     _id: req.user._Id, //auth.js에서 user는 req.user로 넣어줬기 때문에 가능
@@ -82,6 +82,17 @@ app.get('api/users/auth', auth, (req,res) => {
   })
 })
 
+app.get('/api/users/logout', auth, (req, res) => {
+  //유저를 찾아서 데이터를 업데이트해줌
+  User.findOneAndUpdate({_id: req.user._id},
+    {token: ""} //토큰을 지워줌
+    , (err, user) => {
+      if(err) return res.json({success:false, err});
+      return res.status(200).send({
+        success:true
+      })
+    })
+})
 
 app.listen(port, () => { //이 앱이 5천번 포트에서 listen하면
   console.log(`Example app listening at http://localhost:${port}`) //이 콘솔이 수행된다
