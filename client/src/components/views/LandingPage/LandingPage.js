@@ -13,7 +13,7 @@ export default function LandingPage() { //랜딩페이지에 들어오자마자
         <div style={{
             display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%', height: '100vh'
         }}>
-            LandingPage 랜딩페이지입니다.
+            <h2>시작 페이지</h2>
         </div>
     )
 }
