@@ -36,6 +36,8 @@ app.post('/api/users/register', (req, res) => { //콜백펑션: req, res
   const user = new User(req.body)
 
   user.save((err, userInfo) => {//정보들이 유저모델에 저장이 됨
+    console.log(err);
+
     if (err)
       return res.json({ success: false, err })
 
@@ -75,11 +77,11 @@ app.post('/api/users/login', (req, res) => {
 
 app.get('/api/users/auth', auth, (req, res) => {
   //여기까지 미들웨어를 통과해 왔다는 얘기는 Authentication이 true인 경우임
-  req.status(200).json({
+  res.status(200).json({
     _id: req.user._Id, //auth.js에서 user는 req.user로 넣어줬기 때문에 가능
     isAdmin: req.user.role == 0 ? false : true, //role이 0이면 일반유저, 0이 아니면 admin
-    iSAuth: true,
-    email: require.user.email,
+    isAuth: true,
+    email: req.user.email,
     name: req.user.name,
     lastname: req.user.lastname,
     role: req.user.role,

@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
-import Axios from 'axios';
 import { useDispatch } from 'react-redux'
 import { loginUser } from '../../../_actions/user_action';
+import { withRouter } from 'react-router-dom';
 
-export default function LoginPage(props) {
+function LoginPage(props) {
     const dispatch = useDispatch()
 
     const [Email, setEmail] = useState("")
@@ -33,7 +33,7 @@ export default function LoginPage(props) {
             .then(response => {
                 if (response.payload.loginSuccess) {//로그인 성공 시
                     //리액트에서 페이지간의 이동을 시길 떄 사용    
-                    props.history.push('/') //루트 페이지로 이동
+                    props.history.push("/todo") //루트 페이지로 이동
                 } else {
                     alert('Error')
                 }
@@ -59,3 +59,5 @@ export default function LoginPage(props) {
         </div>
     )
 }
+
+export default withRouter(LoginPage)
