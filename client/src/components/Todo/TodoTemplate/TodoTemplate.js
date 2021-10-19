@@ -1,7 +1,8 @@
 import React from 'react';
 import '../Todo.css';
 
-function TodoTemplate({children}){
+function TodoTemplate({ children }) {
+
     return <div className='to-do-Template'>{children}</div>;
 }
 
